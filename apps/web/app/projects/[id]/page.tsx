@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
+import DotFieldLayout from '@/components/DotFieldLayout';
 import WorkflowVisualizer from '@/components/dashboard/WorkflowVisualizer';
 import { PhysiXDashboard } from '@/components/physics/PhysiXDashboard';
 
@@ -16,9 +17,12 @@ const fresh = (): AgentState => ({ status: 'Queued', done: false, error: false, 
 // ────────── Small UI helpers ──────────
 const Badge = ({ children, type = 'gray' }: { children: React.ReactNode; type?: string }) => {
   const colors: Record<string, [string, string]> = {
-    blue: ['#EFF6FF', '#1D4ED8'], green: ['#F0FDF4', '#15803D'],
-    orange: ['#FFF7ED', '#C2410C'], red: ['#FEF2F2', '#B91C1C'],
-    gray: ['#F1F5F9', '#475569'], purple: ['#FDF4FF', '#7C3AED'],
+    blue: ['rgba(59, 130, 246, 0.2)', '#60A5FA'], 
+    green: ['rgba(34, 197, 94, 0.2)', '#22C55E'],
+    orange: ['rgba(249, 115, 22, 0.2)', '#F97316'], 
+    red: ['rgba(239, 68, 68, 0.2)', '#EF4444'],
+    gray: ['rgba(100, 100, 100, 0.2)', 'rgba(255, 255, 255, 0.8)'], 
+    purple: ['rgba(139, 92, 246, 0.2)', '#A78BFA'],
   };
   const [bg, fg] = colors[type] || colors.gray;
   return (
@@ -32,24 +36,24 @@ const Spinner = () => (
   <span style={{ display: 'inline-block', width: '14px', height: '14px', border: '2px solid #CBD5E1', borderTop: '2px solid #2563EB', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
 );
 
-const Stat = ({ label, value, sub, color = '#0F172A' }: any) => (
-  <div style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '18px 20px' }}>
+const Stat = ({ label, value, sub, color = '#ffffff' }: any) => (
+  <div style={{ background: 'rgba(30, 30, 30, 0.8)', border: '1px solid rgba(100, 100, 100, 0.3)', borderRadius: '10px', padding: '18px 20px', backdropFilter: 'blur(10px)' }}>
     <div style={{ fontSize: '26px', fontWeight: '800', color, fontFamily: 'Space Grotesk, sans-serif' }}>{value}</div>
-    <div style={{ fontSize: '13px', fontWeight: '600', color: '#0F172A', marginTop: '2px' }}>{label}</div>
-    {sub && <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '2px' }}>{sub}</div>}
+    <div style={{ fontSize: '13px', fontWeight: '600', color: 'rgba(255, 255, 255, 0.8)', marginTop: '2px' }}>{label}</div>
+    {sub && <div style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.6)', marginTop: '2px' }}>{sub}</div>}
   </div>
 );
 
 const SectionHeader = ({ icon, title, badge, badgeType }: any) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
     <span style={{ fontSize: '20px' }}>{icon}</span>
-    <h2 style={{ fontSize: '17px', fontWeight: '700', color: '#0F172A', margin: 0 }}>{title}</h2>
+    <h2 style={{ fontSize: '17px', fontWeight: '700', color: '#ffffff', margin: 0 }}>{title}</h2>
     {badge && <Badge type={badgeType}>{badge}</Badge>}
   </div>
 );
 
 const Card = ({ children, style = {} }: any) => (
-  <div style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '24px', ...style }}>
+  <div style={{ background: 'rgba(30, 30, 30, 0.8)', border: '1px solid rgba(100, 100, 100, 0.3)', borderRadius: '12px', padding: '24px', backdropFilter: 'blur(10px)', ...style }}>
     {children}
   </div>
 );
@@ -262,20 +266,26 @@ const CadResult = ({
 
       {/* ── SECTION 1: 3D CAD MODEL ── */}
       <div style={{
-        background: '#fff', border: '1px solid #E2E8F0',
-        borderRadius: '16px', overflow: 'hidden',
+        background: 'rgba(30, 30, 30, 0.8)', 
+        border: '1px solid rgba(100, 100, 100, 0.3)',
+        borderRadius: '16px', 
+        overflow: 'hidden',
+        backdropFilter: 'blur(10px)',
       }}>
         {/* Header */}
         <div style={{
-          padding: '16px 24px', borderBottom: '1px solid #F1F5F9',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          background: '#FAFBFF',
+          padding: '16px 24px', 
+          borderBottom: '1px solid rgba(100, 100, 100, 0.2)',
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          background: 'rgba(40, 40, 50, 0.6)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ fontSize: '20px' }}>🔩</span>
             <div>
-              <h2 style={{ fontSize: '16px', fontWeight: '700', color: '#0F172A', margin: 0 }}>3D CAD Model</h2>
-              <p style={{ fontSize: '12px', color: '#94A3B8', margin: 0 }}>
+              <h2 style={{ fontSize: '16px', fontWeight: '700', color: '#ffffff', margin: 0 }}>3D CAD Model</h2>
+              <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)', margin: 0 }}>
                 {params.component_type ? params.component_type.replace('_', ' ') : ''} · {params.span_mm || ''}mm
               </p>
             </div>
@@ -291,8 +301,12 @@ const CadResult = ({
         {/* CAD Spec quick stats */}
         {params.component_type && (
           <div style={{
-            padding: '12px 24px', borderBottom: '1px solid #F1F5F9',
-            display: 'flex', gap: '24px', flexWrap: 'wrap', background: '#F8FAFC',
+            padding: '12px 24px', 
+            borderBottom: '1px solid rgba(100, 100, 100, 0.2)',
+            display: 'flex', 
+            gap: '24px', 
+            flexWrap: 'wrap', 
+            background: 'rgba(50, 50, 60, 0.4)',
           }}>
             {[
               { k: 'Type',      v: params.component_type?.replace(/_/g,' ') },
@@ -303,8 +317,8 @@ const CadResult = ({
               { k: 'Material',  v: params.material },
             ].filter(s => s.v).map(s => (
               <div key={s.k}>
-                <div style={{ fontSize: '10px', color: '#94A3B8', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.k}</div>
-                <div style={{ fontSize: '13px', color: '#0F172A', fontWeight: '700' }}>{String(s.v)}</div>
+                <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.6)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{s.k}</div>
+                <div style={{ fontSize: '13px', color: '#ffffff', fontWeight: '700' }}>{String(s.v)}</div>
               </div>
             ))}
           </div>
@@ -323,22 +337,30 @@ const CadResult = ({
         {/* Export links */}
         {data && (data.gltf_url || data.step_url || data.stl_url) && (
           <div style={{
-            padding: '12px 24px', borderTop: '1px solid #F1F5F9',
-            display: 'flex', gap: '12px', background: '#FAFBFF',
+            padding: '12px 24px', 
+            borderTop: '1px solid rgba(100, 100, 100, 0.2)',
+            display: 'flex', 
+            gap: '12px', 
+            background: 'rgba(40, 40, 50, 0.6)',
           }}>
-            <span style={{ fontSize: '12px', color: '#94A3B8', fontWeight: '600', lineHeight: '28px' }}>Download:</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)', fontWeight: '600', lineHeight: '28px' }}>Download:</span>
             {[
-              { url: data.gltf_url, label: '⬇ GLTF', color: '#2563EB' },
-              { url: data.step_url, label: '⬇ STEP', color: '#059669' },
-              { url: data.stl_url,  label: '⬇ STL',  color: '#7C3AED' },
+              { url: data.gltf_url, label: '⬇ GLTF', color: '#60A5FA' },
+              { url: data.step_url, label: '⬇ STEP', color: '#22C55E' },
+              { url: data.stl_url,  label: '⬇ STL',  color: '#A78BFA' },
             ].filter(f => f.url).map(f => (
               <a key={f.label}
                 href={`${BACKEND}${f.url}`}
                 target="_blank" rel="noopener noreferrer"
                 style={{
-                  background: '#F8FAFC', border: '1px solid #E2E8F0',
-                  color: f.color, padding: '5px 14px', borderRadius: '8px',
-                  fontSize: '12px', fontWeight: '700', textDecoration: 'none',
+                  background: 'rgba(60, 60, 80, 0.4)', 
+                  border: '1px solid rgba(100, 100, 100, 0.3)',
+                  color: f.color, 
+                  padding: '5px 14px', 
+                  borderRadius: '8px',
+                  fontSize: '12px', 
+                  fontWeight: '700', 
+                  textDecoration: 'none',
                 }}>
                 {f.label}
               </a>
@@ -349,21 +371,28 @@ const CadResult = ({
 
       {/* ── SECTION 2: CIRCUIT DESIGN (derived from CAD) ── */}
       <div style={{
-        background: '#fff', border: '1px solid #E2E8F0',
-        borderRadius: '16px', overflow: 'hidden',
+        background: 'rgba(30, 30, 30, 0.8)', 
+        border: '1px solid rgba(100, 100, 100, 0.3)',
+        borderRadius: '16px', 
+        overflow: 'hidden',
+        backdropFilter: 'blur(10px)',
       }}>
         {/* Header */}
         <div style={{
-          padding: '16px 24px', background: '#0F172A',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '16px 24px', 
+          background: 'rgba(40, 50, 70, 0.6)',
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          borderBottom: '1px solid rgba(100, 100, 100, 0.2)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ fontSize: '20px' }}>⚡</span>
             <div>
-              <h2 style={{ fontSize: '16px', fontWeight: '700', color: '#F1F5F9', margin: 0 }}>
+              <h2 style={{ fontSize: '16px', fontWeight: '700', color: '#ffffff', margin: 0 }}>
                 Circuit Design
               </h2>
-              <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>
+              <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)', margin: 0 }}>
                 Auto-generated from CAD spec · Electronics Agent
               </p>
             </div>
@@ -375,7 +404,7 @@ const CadResult = ({
 
         {/* Loading state */}
         {!circuitData && (
-          <div style={{ padding: '48px', textAlign: 'center', color: '#94A3B8' }}>
+          <div style={{ padding: '48px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.6)' }}>
             {circuitGenerating
               ? <><Spinner /> &nbsp; {circuitStatus || 'Electronics agent generating circuit…'}</>
               : isGenerating
@@ -886,34 +915,72 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
   ] as const;
 
   return (
-    <div style={{ background: '#F8FAFC', minHeight: '100vh' }}>
-      {/* Top Nav */}
-      <nav style={{ background: '#fff', borderBottom: '1px solid #E2E8F0', padding: '0 24px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-            <div style={{ width: '28px', height: '28px', background: 'linear-gradient(135deg,#2563EB,#059669)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: 'white', fontWeight: '800', fontSize: '12px' }}>AI</span>
+    <DotFieldLayout>
+      <div style={{ minHeight: '100vh' }}>
+      {/* Top Nav - Dark Theme */}
+      <nav style={{ 
+        position: 'fixed',
+        top: '24px',
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '32px',
+          background: 'rgba(30, 30, 30, 0.8)',
+          backdropFilter: 'blur(20px)',
+          borderRadius: '50px',
+          padding: '12px 32px',
+          border: '1px solid rgba(80, 80, 80, 0.4)',
+        }}>
+          <a href="/" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            textDecoration: 'none',
+            color: '#ffffff',
+          }}>
+            <div style={{
+              width: '28px',
+              height: '28px',
+              background: 'rgba(80, 80, 80, 0.5)',
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid rgba(100, 100, 100, 0.3)',
+              fontSize: '14px',
+              fontWeight: '700',
+            }}>
+              🔧
             </div>
-            <span style={{ fontWeight: '700', fontSize: '16px', color: '#0F172A', fontFamily: 'Space Grotesk,sans-serif' }}>InventAI</span>
+            <span style={{ fontWeight: '700', fontSize: '15px', letterSpacing: '-0.3px' }}>InventAI</span>
           </a>
-          <span style={{ color: '#CBD5E1' }}>›</span>
-          <span style={{ fontSize: '13px', color: '#64748B', maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{decodeURIComponent(idea)}</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {allDone ? (
-            <span style={{ background: '#F0FDF4', color: '#15803D', padding: '4px 12px', borderRadius: '20px', fontSize: '13px', fontWeight: '600' }}>
-              ✓ {passCount}/6 Completed
-            </span>
-          ) : (
-            <span style={{ background: '#EFF6FF', color: '#1D4ED8', padding: '4px 12px', borderRadius: '20px', fontSize: '13px', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Spinner /> Running agents...
-            </span>
-          )}
         </div>
       </nav>
 
-      {/* Tab Bar */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #E2E8F0', padding: '0 24px', display: 'flex', gap: '4px', overflowX: 'auto' }}>
+      {/* Tab Bar - Dark Theme - Pill Shaped */}
+      <div style={{ 
+        marginTop: '80px',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '12px 24px',
+      }}>
+        <div style={{
+          background: 'rgba(30, 30, 30, 0.8)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(100, 100, 100, 0.3)',
+          borderRadius: '50px',
+          padding: '8px 12px',
+          display: 'flex', 
+          gap: '4px', 
+          overflowX: 'auto',
+        }}>
         {TABS.map(t => {
           const ag = agents[t.key as keyof typeof agents];
           const isDone = ag?.done && !ag?.error;
@@ -921,10 +988,19 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
           return (
             <button key={t.key} onClick={() => setTab(t.key as any)}
               style={{
-                padding: '12px 16px', border: 'none', borderBottom: tab === t.key ? '2px solid #2563EB' : '2px solid transparent',
-                background: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: tab === t.key ? '600' : '500',
-                color: tab === t.key ? '#2563EB' : '#64748B', whiteSpace: 'nowrap',
-                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '8px 14px', 
+                border: 'none', 
+                borderRadius: '40px',
+                background: tab === t.key ? 'rgba(120, 120, 140, 0.5)' : 'transparent', 
+                cursor: 'pointer', 
+                fontSize: '13px', 
+                fontWeight: tab === t.key ? '600' : '500',
+                color: tab === t.key ? '#ffffff' : 'rgba(255, 255, 255, 0.6)', 
+                whiteSpace: 'nowrap',
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '6px',
+                transition: 'all 0.2s',
               }}>
               {t.icon} {t.label}
               {isDone && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#059669', display: 'inline-block' }} />}
@@ -932,36 +1008,37 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
             </button>
           );
         })}
+        </div>
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '28px 24px' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '100px 24px 28px' }}>
 
         {/* ── Overview Tab ── */}
         {tab === 'overview' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {/* Top: Horizontal Agent Pipeline */}
             <Card>
-              <h3 style={{ fontSize: '15px', fontWeight: '700', color: '#0F172A', marginBottom: '24px' }}>Agent Pipeline Orchestrator</h3>
+              <h3 style={{ fontSize: '15px', fontWeight: '700', color: '#ffffff', marginBottom: '24px' }}>Agent Pipeline Orchestrator</h3>
               <WorkflowVisualizer agents={agents} />
             </Card>
             {/* Bottom: Summary Stats + Quick Results */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {/* Stats row */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-                <Stat label="Agents Complete" value={`${passCount}/6`} color="#2563EB" />
+                <Stat label="Agents Complete" value={`${passCount}/6`} color="#ffffff" />
                 <Stat label="Physics Safety" value={agents.physics.data?.safety_factor?.toFixed(2) || '–'}
-                  color={agents.physics.data?.safety_factor >= 1 ? '#059669' : '#DC2626'}
+                  color={agents.physics.data?.safety_factor >= 1 ? '#22C55E' : '#EF4444'}
                   sub={agents.physics.data?.recommendation?.slice(0, 30) + '...'} />
-                <Stat label="Market Size" value={agents.business.data?.market_size_est || '–'} color="#059669" />
+                <Stat label="Market Size" value={agents.business.data?.market_size_est || '–'} color="#22C55E" />
               </div>
 
-              {/* Quick previews */}
+            {/* Quick previews */}
               {agents.cad.done && !agents.cad.error && agents.cad.data && (
-                <div style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '16px' }}>
+                <div style={{ background: 'rgba(30, 30, 30, 0.8)', border: '1px solid rgba(100, 100, 100, 0.3)', borderRadius: '10px', padding: '16px', backdropFilter: 'blur(10px)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: '600', color: '#0F172A' }}>🔩 CAD Files Ready</span>
-                    <button onClick={() => setTab('cad')} style={{ fontSize: '12px', color: '#2563EB', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}>View →</button>
+                    <span style={{ fontSize: '14px', fontWeight: '600', color: '#ffffff' }}>🔩 CAD Files Ready</span>
+                    <button onClick={() => setTab('cad')} style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}>View →</button>
                   </div>
                   <div style={{ display: 'flex', gap: '8px' }}>
                     {['gltf_url', 'step_url', 'stl_url'].map(k => agents.cad.data[k] && (
@@ -972,29 +1049,29 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
               )}
 
               {agents.patent.done && !agents.patent.error && agents.patent.data && (
-                <div style={{ background: '#fff', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '16px' }}>
+                <div style={{ background: 'rgba(30, 30, 30, 0.8)', border: '1px solid rgba(100, 100, 100, 0.3)', borderRadius: '10px', padding: '16px', backdropFilter: 'blur(10px)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: '600', color: '#0F172A' }}>📜 Patent Novelty Score</span>
-                    <button onClick={() => setTab('patent')} style={{ fontSize: '12px', color: '#2563EB', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}>View →</button>
+                    <span style={{ fontSize: '14px', fontWeight: '600', color: '#ffffff' }}>📜 Patent Novelty Score</span>
+                    <button onClick={() => setTab('patent')} style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}>View →</button>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <span style={{ fontSize: '28px', fontWeight: '800', color: '#D97706' }}>
+                    <span style={{ fontSize: '28px', fontWeight: '800', color: '#F59E0B' }}>
                       {Math.round((agents.patent.data?.analysis?.novelty_score || agents.patent.data?.novelty_score || 0) * 100)}%
                     </span>
-                    <span style={{ fontSize: '13px', color: '#64748B' }}>Novelty Index</span>
+                    <span style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.7)' }}>Novelty Index</span>
                   </div>
                 </div>
               )}
 
               {agents.report.done && !agents.report.error && agents.report.data && (
-                <div style={{ background: 'linear-gradient(135deg,#EFF6FF,#F0FDF4)', border: '1px solid #BFDBFE', borderRadius: '10px', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ background: 'rgba(30, 30, 30, 0.8)', border: '1px solid rgba(100, 100, 100, 0.3)', borderRadius: '10px', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(10px)' }}>
                   <div>
-                    <p style={{ fontWeight: '700', fontSize: '14px', color: '#0F172A', marginBottom: '2px' }}>📦 Full Package Ready</p>
-                    <p style={{ fontSize: '12px', color: '#64748B' }}>CAD + Physics + Patent + Research + Report</p>
+                    <p style={{ fontWeight: '700', fontSize: '14px', color: '#ffffff', marginBottom: '2px' }}>📦 Full Package Ready</p>
+                    <p style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.7)' }}>CAD + Physics + Patent + Research + Report</p>
                   </div>
                   {agents.report.data.download_url && (
                     <a href={`${API.replace('/api/v1', '')}${agents.report.data.download_url}`} target="_blank" rel="noopener noreferrer"
-                      style={{ background: '#2563EB', color: 'white', padding: '10px 20px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', textDecoration: 'none' }}>
+                      style={{ background: 'rgba(59, 130, 246, 0.3)', color: '#60A5FA', padding: '10px 20px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', textDecoration: 'none', border: '1px solid rgba(96, 165, 250, 0.3)' }}>
                       ⬇ Download
                     </a>
                   )}
@@ -1064,7 +1141,7 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               {/* Cost Breakdown Pie */}
               <Card>
-                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', margin: '0 0 16px 0' }}>Unit Cost Breakdown</h3>
+                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', margin: '0 0 16px 0' }}>Unit Cost Breakdown</h3>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '220px', position: 'relative' }}>
                   <svg width="180" height="180" viewBox="0 0 180 180">
                     {/* Hardware 60% - Blue */}
@@ -1103,7 +1180,7 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
 
               {/* Market Sizing */}
               <Card>
-                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', margin: '0 0 16px 0' }}>Market Opportunity</h3>
+                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', margin: '0 0 16px 0' }}>Market Opportunity</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {[
                     { label: 'TAM', val: '$4.5B', sub: 'Total Addressable', color: '#3B82F6' },
@@ -1132,7 +1209,7 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
 
             {/* === 3-YEAR FINANCIAL PROJECTIONS === */}
             <Card>
-              <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', margin: '0 0 16px 0' }}>📈 3-Year Financial Projections</h3>
+              <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', margin: '0 0 16px 0' }}>📈 3-Year Financial Projections</h3>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', fontSize: '12px', borderCollapse: 'collapse' }}>
                   <thead>
@@ -1184,7 +1261,7 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               {/* Scenarios */}
               <Card>
-                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', margin: '0 0 16px 0' }}>📊 Scenario Analysis</h3>
+                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', margin: '0 0 16px 0' }}>📊 Scenario Analysis</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {[
                     { name: 'Conservative', units: 300, msrp: 11000, margin: 45, color: '#D97706' },
@@ -1217,7 +1294,7 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
 
               {/* Top Cost Drivers */}
               <Card>
-                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', margin: '0 0 16px 0' }}>⚡ Top Cost Drivers (Pareto)</h3>
+                <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', margin: '0 0 16px 0' }}>⚡ Top Cost Drivers (Pareto)</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {[
                     { name: 'Flight Controller', cost: 1500, pct: 29, color: '#3B82F6' },
@@ -1245,7 +1322,7 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
 
             {/* === PRICING & MARGIN SIMULATOR === */}
             <Card>
-              <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', margin: '0 0 16px 0' }}>💰 Pricing & Margin Simulator</h3>
+              <h3 style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff', margin: '0 0 16px 0' }}>💰 Pricing & Margin Simulator</h3>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div>
                   <label style={{ fontSize: '12px', fontWeight: '700', color: '#475569', marginBottom: '8px', display: 'block' }}>MSRP Range</label>
@@ -1514,7 +1591,8 @@ function ProjectDashboardInner({ params, searchParams }: { params: Promise<{ id:
       </div>
 
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-    </div>
+      </div>
+    </DotFieldLayout>
   );
 }
 

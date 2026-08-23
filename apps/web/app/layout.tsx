@@ -20,32 +20,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
         <style>
           {`
-            @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Instrument+Serif:ital@0;1&display=swap');
-            
-            html, body, div, span, applet, object, iframe,
-            h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-            a, abbr, acronym, address, big, cite, code,
-            del, dfn, em, img, ins, kbd, q, s, samp,
-            small, strike, strong, sub, sup, tt, var,
-            b, u, i, center,
-            dl, dt, dd, ol, ul, li,
-            fieldset, form, label, legend,
-            table, caption, tbody, tfd, th, thead, tr, td,
-            article, aside, canvas, details, embed,
-            figure, figcaption, footer, header, hgroup,
-            menu, nav, output, ruby, section, summary,
-            time, mark, audio, video, button, input, textarea, select {
-              font-family: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
-              font-optical-sizing: auto;
-              font-weight: 500;
-              font-style: normal;
-              font-variation-settings: "GRAD" 0;
-            }
-
+            /* Global Font Application */
             * {
-              font-family: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+              font-family: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+              font-optical-sizing: auto;
+              font-variation-settings: "GRAD" 0;
             }
 
             /* Google Sans CSS Classes */
@@ -82,30 +67,19 @@ export default function RootLayout({
             }
 
             /* Instrument Serif CSS Classes */
-            .instrument-serif {
-              font-family: "Instrument Serif", serif !important;
-              font-optical-sizing: auto;
-              font-style: italic !important;
-              font-variation-settings: "GRAD" 0;
-            }
-
             .instrument-serif-regular {
-              font-family: "Instrument Serif", serif !important;
+              font-family: "Instrument Serif", serif;
               font-weight: 400;
               font-style: normal;
             }
 
             .instrument-serif-regular-italic {
-              font-family: "Instrument Serif", serif !important;
+              font-family: "Instrument Serif", serif;
               font-weight: 400;
-              font-style: italic !important;
+              font-style: italic;
             }
           `}
         </style>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body style={{ margin: 0, padding: 0, fontFamily: '"Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', background: '#000000' }}>
         <Providers>{children}</Providers>

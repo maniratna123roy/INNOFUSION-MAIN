@@ -1,1 +1,1 @@
-export { default as GradientWaves } from './GradientWaves';
+export { default } from './GradientWaves';

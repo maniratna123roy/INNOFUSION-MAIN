@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import DotFieldLayout from '@/components/DotFieldLayout';
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
 
@@ -49,31 +50,95 @@ export default function NewProjectPage() {
   };
 
   return (
-    <div style={{ background: '#ffffff', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
-
+    <DotFieldLayout>
       {/* NAV */}
       <nav style={{
-        background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid #F1F5F9',
-        padding: '0 40px', height: '64px',
-        display: 'flex', alignItems: 'center', gap: '12px',
-        position: 'sticky', top: 0, zIndex: 100,
+        position: 'fixed',
+        top: '24px',
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}>
-        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-          <div style={{
-            width: '34px', height: '34px',
-            background: 'linear-gradient(135deg,#2563EB,#059669)',
-            borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '32px',
+          background: 'rgba(30, 30, 30, 0.8)',
+          backdropFilter: 'blur(20px)',
+          borderRadius: '50px',
+          padding: '12px 32px',
+          border: '1px solid rgba(80, 80, 80, 0.4)',
+        }}>
+          <a href="/" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            textDecoration: 'none',
+            color: '#ffffff',
           }}>
-            <span style={{ color: 'white', fontWeight: '900', fontSize: '13px' }}>AI</span>
-          </div>
-          <span style={{ fontWeight: '800', fontSize: '18px', color: '#0F172A', letterSpacing: '-0.5px' }}>InventAI</span>
-        </a>
-        <span style={{ color: '#E2E8F0' }}>›</span>
-        <span style={{ fontSize: '14px', color: '#64748B', fontWeight: '500' }}>New Invention</span>
+            <div style={{
+              width: '28px',
+              height: '28px',
+              background: 'rgba(80, 80, 80, 0.5)',
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid rgba(100, 100, 100, 0.3)',
+              fontSize: '14px',
+              fontWeight: '700',
+            }}>
+              🔧
+            </div>
+            <span style={{ fontWeight: '700', fontSize: '15px', letterSpacing: '-0.3px' }}>InventAI</span>
+          </a>
+          <a href="/#agents" style={{
+            fontSize: '13px',
+            fontWeight: '500',
+            color: 'rgba(255, 255, 255, 0.7)',
+            textDecoration: 'none',
+            transition: 'color 0.2s',
+          }}>
+            Agents
+          </a>
+          <a href="/#how" style={{
+            fontSize: '13px',
+            fontWeight: '500',
+            color: 'rgba(255, 255, 255, 0.7)',
+            textDecoration: 'none',
+            transition: 'color 0.2s',
+          }}>
+            How it works
+          </a>
+          <a href="/#features" style={{
+            fontSize: '13px',
+            fontWeight: '500',
+            color: 'rgba(255, 255, 255, 0.7)',
+            textDecoration: 'none',
+            transition: 'color 0.2s',
+          }}>
+            Features
+          </a>
+          <a href="/projects/new" style={{
+            background: 'rgba(60, 60, 60, 0.6)',
+            color: 'white',
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontSize: '13px',
+            fontWeight: '600',
+            textDecoration: 'none',
+            border: '1px solid rgba(100, 100, 100, 0.3)',
+            transition: 'background 0.2s',
+          }}>
+            Launch App →
+          </a>
+        </div>
       </nav>
 
-      <div style={{ maxWidth: '1080px', margin: '0 auto', padding: '56px 40px' }}>
+      <div style={{ maxWidth: '1080px', margin: '0 auto', padding: '120px 40px 56px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '40px', alignItems: 'start' }}>
 
           {/* ── LEFT — Main form ── */}
@@ -81,31 +146,32 @@ export default function NewProjectPage() {
             {/* Heading */}
             <div style={{ marginBottom: '36px' }}>
               <span style={{
-                display: 'inline-block', background: '#EFF6FF', color: '#1D4ED8',
+                display: 'inline-block', background: 'rgba(59, 130, 246, 0.2)', color: '#60A5FA',
                 padding: '5px 14px', borderRadius: '100px', fontSize: '12px', fontWeight: '700',
                 letterSpacing: '0.04em', marginBottom: '16px',
               }}>
                 ⚡ 6 AI AGENTS READY
               </span>
               <h1 style={{
-                fontSize: '40px', fontWeight: '900', color: '#0F172A',
+                fontSize: '40px', fontWeight: '900', color: '#ffffff',
                 letterSpacing: '-1.5px', lineHeight: '1.1', marginBottom: '12px',
               }}>
                 Describe Your Invention
               </h1>
-              <p style={{ fontSize: '16px', color: '#64748B', lineHeight: '1.7' }}>
+              <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.7)', lineHeight: '1.7' }}>
                 One sentence is enough. Our AI pipeline handles CAD, physics, business, research, patents and reporting automatically.
               </p>
             </div>
 
             {/* Form card */}
             <div style={{
-              background: '#ffffff', border: '1.5px solid #E2E8F0',
+              background: 'rgba(30,30,30,0.8)', border: '1.5px solid rgba(100,100,100,0.3)',
               borderRadius: '18px', padding: '32px',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+              backdropFilter: 'blur(10px)',
             }}>
               <form onSubmit={handleSubmit}>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#334155', marginBottom: '10px', letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: 'rgba(255,255,255,0.8)', marginBottom: '10px', letterSpacing: '0.03em', textTransform: 'uppercase' }}>
                   Invention Description
                 </label>
                 <textarea
@@ -114,17 +180,17 @@ export default function NewProjectPage() {
                   required rows={6}
                   placeholder="E.g., A foldable inspection drone with ultrasonic sensors for infrastructure maintenance and AI-powered defect detection..."
                   style={{
-                    width: '100%', border: '2px solid #E2E8F0', borderRadius: '12px',
-                    padding: '16px', fontSize: '15px', color: '#0F172A',
-                    background: '#F8FAFC', resize: 'vertical', outline: 'none',
+                    width: '100%', border: '2px solid rgba(100,100,100,0.3)', borderRadius: '12px',
+                    padding: '16px', fontSize: '15px', color: '#ffffff',
+                    background: 'rgba(50,50,50,0.8)', resize: 'vertical', outline: 'none',
                     fontFamily: 'inherit', lineHeight: '1.65', boxSizing: 'border-box',
                   }}
-                  onFocus={e => e.target.style.borderColor = '#2563EB'}
-                  onBlur={e => e.target.style.borderColor = '#E2E8F0'}
+                  onFocus={e => e.target.style.borderColor = 'rgba(59,130,246,0.5)'}
+                  onBlur={e => e.target.style.borderColor = 'rgba(100,100,100,0.3)'}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', marginBottom: '20px' }}>
-                  <span style={{ fontSize: '12px', color: '#94A3B8' }}>Be specific — mention size, materials, use case</span>
-                  <span style={{ fontSize: '12px', color: '#94A3B8' }}>{idea.length} chars</span>
+                  <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>Be specific — mention size, materials, use case</span>
+                  <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>{idea.length} chars</span>
                 </div>
 
                 <button
@@ -132,13 +198,32 @@ export default function NewProjectPage() {
                   disabled={loading || !idea.trim()}
                   style={{
                     width: '100%',
-                    background: loading ? '#93C5FD' : 'linear-gradient(135deg,#2563EB,#1D4ED8)',
-                    color: 'white', border: 'none', borderRadius: '12px',
-                    padding: '16px 24px', fontSize: '16px', fontWeight: '800',
+                    background: loading ? 'rgba(120, 120, 140, 0.3)' : 'rgba(120, 120, 140, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    color: 'white', 
+                    border: '1px solid rgba(150, 150, 170, 0.3)',
+                    borderRadius: '12px',
+                    padding: '16px 24px', 
+                    fontSize: '16px', 
+                    fontWeight: '800',
                     cursor: loading ? 'not-allowed' : 'pointer',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-                    boxShadow: loading ? 'none' : '0 4px 16px rgba(37,99,235,0.38)',
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    gap: '10px',
+                    boxShadow: loading ? 'none' : '0 4px 16px rgba(120,120,140,0.2)',
                     letterSpacing: '-0.2px',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={e => {
+                    if (!loading && idea.trim()) {
+                      (e.currentTarget as HTMLElement).style.background = 'rgba(120, 120, 140, 0.5)';
+                      (e.currentTarget as HTMLElement).style.borderColor = 'rgba(150, 150, 170, 0.5)';
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.background = 'rgba(120, 120, 140, 0.4)';
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(150, 150, 170, 0.3)';
                   }}
                 >
                   {loading ? (
@@ -157,7 +242,7 @@ export default function NewProjectPage() {
 
             {/* Example ideas */}
             <div style={{ marginTop: '28px' }}>
-              <p style={{ fontSize: '12px', fontWeight: '700', color: '#94A3B8', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+              <p style={{ fontSize: '12px', fontWeight: '700', color: 'rgba(255,255,255,0.5)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
                 Try an example
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -166,22 +251,23 @@ export default function NewProjectPage() {
                     key={ex.text}
                     onClick={() => setIdea(ex.text)}
                     style={{
-                      background: '#F8FAFC', border: '1.5px solid #E2E8F0',
+                      background: 'rgba(50,50,50,0.6)', border: '1.5px solid rgba(100,100,100,0.3)',
                       borderRadius: '10px', padding: '12px 16px',
                       textAlign: 'left', cursor: 'pointer',
                       display: 'flex', alignItems: 'flex-start', gap: '12px',
+                      backdropFilter: 'blur(10px)',
                     }}
                     onMouseEnter={e => {
-                      (e.currentTarget as HTMLElement).style.borderColor = '#93C5FD';
-                      (e.currentTarget as HTMLElement).style.background = '#EFF6FF';
+                      (e.currentTarget as HTMLElement).style.borderColor = 'rgba(59,130,246,0.4)';
+                      (e.currentTarget as HTMLElement).style.background = 'rgba(59,130,246,0.1)';
                     }}
                     onMouseLeave={e => {
-                      (e.currentTarget as HTMLElement).style.borderColor = '#E2E8F0';
-                      (e.currentTarget as HTMLElement).style.background = '#F8FAFC';
+                      (e.currentTarget as HTMLElement).style.borderColor = 'rgba(100,100,100,0.3)';
+                      (e.currentTarget as HTMLElement).style.background = 'rgba(50,50,50,0.6)';
                     }}
                   >
                     <span style={{ fontSize: '20px', flexShrink: 0 }}>{ex.icon}</span>
-                    <span style={{ fontSize: '13px', color: '#334155', lineHeight: '1.55' }}>{ex.text}</span>
+                    <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.55' }}>{ex.text}</span>
                   </button>
                 ))}
               </div>
@@ -190,14 +276,15 @@ export default function NewProjectPage() {
 
           {/* ── RIGHT — Pipeline sidebar ── */}
           <div style={{
-            background: '#F8FAFC', border: '1.5px solid #F1F5F9',
+            background: 'rgba(30,30,30,0.7)', border: '1.5px solid rgba(100,100,100,0.3)',
             borderRadius: '18px', padding: '28px',
-            position: 'sticky', top: '80px',
+            position: 'sticky', top: '100px',
+            backdropFilter: 'blur(10px)',
           }}>
-            <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#0F172A', marginBottom: '6px', letterSpacing: '-0.3px' }}>
+            <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#ffffff', marginBottom: '6px', letterSpacing: '-0.3px' }}>
               What happens when you submit
             </h3>
-            <p style={{ fontSize: '13px', color: '#94A3B8', marginBottom: '24px' }}>6 agents run in sequence + parallel</p>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginBottom: '24px' }}>6 agents run in sequence + parallel</p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {PIPELINE.map((step, i) => (
@@ -212,32 +299,32 @@ export default function NewProjectPage() {
                       {step.icon}
                     </div>
                     {i < PIPELINE.length - 1 && (
-                      <div style={{ width: '2px', height: '24px', background: '#E2E8F0', margin: '4px 0' }} />
+                      <div style={{ width: '2px', height: '24px', background: 'rgba(100,100,100,0.3)', margin: '4px 0' }} />
                     )}
                   </div>
                   {/* Content */}
                   <div style={{ paddingTop: '8px', paddingBottom: i < PIPELINE.length - 1 ? '0' : '0' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '2px' }}>
-                      <span style={{ fontSize: '13px', fontWeight: '700', color: '#0F172A' }}>{step.label}</span>
+                      <span style={{ fontSize: '13px', fontWeight: '700', color: '#ffffff' }}>{step.label}</span>
                       <span style={{
-                        fontSize: '10px', fontWeight: '700', color: '#94A3B8',
-                        background: '#EEF2FF', padding: '2px 7px', borderRadius: '100px',
+                        fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.7)',
+                        background: 'rgba(59,130,246,0.2)', padding: '2px 7px', borderRadius: '100px',
                       }}>{step.time}</span>
                     </div>
-                    <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>{step.desc}</p>
+                    <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', margin: 0 }}>{step.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Output tags */}
-            <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #E2E8F0' }}>
-              <p style={{ fontSize: '11px', fontWeight: '700', color: '#94A3B8', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Output files</p>
+            <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid rgba(100,100,100,0.3)' }}>
+              <p style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.6)', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Output files</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {['GLTF', 'STEP', 'STL', 'Heatmap', 'BOM.xlsx', 'Patent.pdf', 'Report.pdf', 'Package.zip'].map(tag => (
                   <span key={tag} style={{
-                    background: '#ffffff', border: '1px solid #E2E8F0',
-                    color: '#475569', padding: '4px 10px', borderRadius: '100px',
+                    background: 'rgba(100,100,100,0.2)', border: '1px solid rgba(100,100,100,0.3)',
+                    color: 'rgba(255,255,255,0.8)', padding: '4px 10px', borderRadius: '100px',
                     fontSize: '11px', fontWeight: '600',
                   }}>{tag}</span>
                 ))}
@@ -248,6 +335,6 @@ export default function NewProjectPage() {
       </div>
 
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-    </div>
+    </DotFieldLayout>
   );
 }
